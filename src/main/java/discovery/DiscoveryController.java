@@ -1,5 +1,7 @@
 package discovery;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -8,15 +10,17 @@ import java.util.concurrent.ConcurrentHashMap;
 
 
 @RestController
-public class DiscoverController {
+public class DiscoveryController {
 
-        @RequestMapping("/discover")
-        public String discoverer(@RequestParam(value="key") String key) {
+        @Autowired
+        DiscoveryConfig discoveryConfig;
+
+        @RequestMapping("/discover/{key}")
+        public String discoverer(@PathVariable String key) {
 
             String value=null;
-            Discover discover = new Discover();
 
-            ConcurrentHashMap<String,String> concurrentHashMap = discover.initialiseHashMap();
+            ConcurrentHashMap<String,String> concurrentHashMap = discoveryConfig.initialiseHashMap();
 
             for (String keyValue : concurrentHashMap.keySet()){
                 if (concurrentHashMap.get(key) == null){

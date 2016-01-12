@@ -1,16 +1,17 @@
 package discovery;
 
 
-import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
 
 import java.util.concurrent.ConcurrentHashMap;
 
-@Component
-public class Discover {
+@Configuration
+public class DiscoveryConfig {
 
 
+    @Bean
     public ConcurrentHashMap<String, String> initialiseHashMap (){
 
         ConcurrentHashMap concurrentHashMap = new ConcurrentHashMap<String, String>(4,0.9f,1);
