@@ -1,11 +1,12 @@
 package discovery;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 
@@ -13,14 +14,18 @@ import java.util.concurrent.ConcurrentHashMap;
 public class DiscoveryController {
 
         @Autowired
-        DiscoveryConfig discoveryConfig;
+        ConcurrentHashMap<String,String> concurrentHashMap;
 
-        @RequestMapping("/discover/{key}")
+        @RequestMapping(path = "/discover/", method = RequestMethod.GET)
+        public ResponseEntity<Map<String,String>> listAll() {
+
+            return new ResponseEntity<Map<String,String>>(concurrentHashMap, HttpStatus.OK);
+        }
+
+        @RequestMapping(path = "/discover/{key}", method = RequestMethod.GET)
         public String discoverer(@PathVariable String key) {
 
             String value=null;
-
-            ConcurrentHashMap<String,String> concurrentHashMap = discoveryConfig.initialiseHashMap();
 
             for (String keyValue : concurrentHashMap.keySet()){
                 if (concurrentHashMap.get(key) == null){
@@ -33,5 +38,7 @@ public class DiscoveryController {
 
             return value;
         }
+
+
 }
 
