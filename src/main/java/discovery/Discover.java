@@ -1,12 +1,13 @@
 package discovery;
 
+import org.springframework.stereotype.Component;
 
-public class discover {
+public class Discover {
 
     String value;
     String key;
 
-    public discover(String value, String key) {
+    public Discover(String value, String key) {
         this.value = value;
         this.key = key;
     }
@@ -25,5 +26,13 @@ public class discover {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    @Override
+    public String toString() {
+        return "Discover{" +
+                "value='" + value + '\'' +
+                ", key='" + key + '\'' +
+                '}';
     }
 }

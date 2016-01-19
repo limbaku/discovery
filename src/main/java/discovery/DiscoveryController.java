@@ -7,8 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.Collection;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 
@@ -16,15 +15,15 @@ import java.util.concurrent.ConcurrentHashMap;
 public class DiscoveryController {
 
         @Autowired
-        ConcurrentHashMap<String,String> concurrentHashMap;
+        ArrayList<Discover> concurrentList;
 
         @RequestMapping(path = "/discover/", method = RequestMethod.GET)
-        public ResponseEntity<Map<String,String>> listAll() {
+        public ResponseEntity<ArrayList<Discover>> listAll() {
 
-            return new ResponseEntity<Map<String,String>>(concurrentHashMap, HttpStatus.OK);
+            return new ResponseEntity<ArrayList<Discover>>(concurrentList, HttpStatus.OK);
         }
 
-        @RequestMapping(path = "/discover/{key}", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+       /* @RequestMapping(path = "/discover/{key}", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
         public ResponseEntity<String> discoverer(@PathVariable String key) {
 
             for (String keyValue : concurrentHashMap.keySet()){
@@ -44,7 +43,7 @@ public class DiscoveryController {
                 return new ResponseEntity<Void>(HttpStatus.OK);
 
 
-        }
+        }*/
 
 
 }
