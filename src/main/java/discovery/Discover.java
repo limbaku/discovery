@@ -4,12 +4,15 @@ import org.springframework.stereotype.Component;
 
 public class Discover {
 
-    String value;
-    String key;
+    private String key;
+    private String value;
 
-    public Discover(String value, String key) {
-        this.value = value;
+    public Discover() {
+    }
+
+    public Discover(String key, String value) {
         this.key = key;
+        this.value = value;
     }
 
     public String getValue() {

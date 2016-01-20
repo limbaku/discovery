@@ -15,35 +15,36 @@ import java.util.concurrent.ConcurrentHashMap;
 public class DiscoveryController {
 
         @Autowired
-        ArrayList<Discover> concurrentList;
+        ConcurrentHashMap<String,Discover> concurrentHashMap;
+
 
         @RequestMapping(path = "/discover/", method = RequestMethod.GET)
-        public ResponseEntity<ArrayList<Discover>> listAll() {
+        public ResponseEntity<Collection<Discover>> listAll() {
 
-            return new ResponseEntity<ArrayList<Discover>>(concurrentList, HttpStatus.OK);
+                return new ResponseEntity<Collection<Discover>>(concurrentHashMap.values(), HttpStatus.OK);
         }
 
-       /* @RequestMapping(path = "/discover/{key}", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+        @RequestMapping(path = "/discover/{key}", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
         public ResponseEntity<String> discoverer(@PathVariable String key) {
+                Discover discover = concurrentHashMap.get(key);
 
-            for (String keyValue : concurrentHashMap.keySet()){
-                if (concurrentHashMap.get(key) == null) {
+                if (discover == null) {
+
                     return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
                 }
-                return new ResponseEntity<String>(concurrentHashMap.get(key),HttpStatus.OK);
-            }
+                return new ResponseEntity<String>(discover.getValue(),HttpStatus.OK);
 
-            return new ResponseEntity<String>(concurrentHashMap.get(key),HttpStatus.OK);
         }
 
         @RequestMapping(value = "/discover/", method = RequestMethod.POST)
-        public ResponseEntity<Void> createUser(@RequestBody ConcurrentHashMap<String,String> concurrentHashMap,    UriComponentsBuilder ucBuilder) {
+        public ResponseEntity<Void> createService(@RequestBody Discover discover) {
 
 
+                concurrentHashMap.putIfAbsent(discover.getKey(),discover);
                 return new ResponseEntity<Void>(HttpStatus.OK);
 
 
-        }*/
+        }
 
 
 }

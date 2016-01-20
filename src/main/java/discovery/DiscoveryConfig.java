@@ -13,16 +13,16 @@ import java.util.concurrent.ConcurrentHashMap;
 public class DiscoveryConfig {
 
     @Bean
-    public List<Discover> initialiseList (){
+    public ConcurrentHashMap<String,Discover> initialiseList (){
 
-        List<Discover> concurrentList = new ArrayList<Discover>();
+        ConcurrentHashMap<String,Discover> concurrentHashMap = new ConcurrentHashMap<String, Discover>();
 
-        concurrentList.add(new Discover("lazylogin","http://lazylogin.trafalgar.ws/"));
-        concurrentList.add(new Discover("recordserver","http://recordserver.trafalgar.ws/"));
-        concurrentList.add(new Discover("gamemanager","http://gamemanager.trafalgar.ws/"));
-        concurrentList.add(new Discover("discovery","http://discovery.trafalgar.ws/"));
+        concurrentHashMap.put("lazylogin",new Discover("lazylogin","http://lazylogin.trafalgar.ws/"));
+        concurrentHashMap.put("recordserver",new Discover("recordserver","http://recordserver.trafalgar.ws/"));
+        concurrentHashMap.put("gamemanager",new Discover("gamemanager","http://gamemanager.trafalgar.ws/"));
+        concurrentHashMap.put("discovery",new Discover("discovery","http://discovery.trafalgar.ws/"));
 
-        return concurrentList;
+        return concurrentHashMap;
     }
 
 }
