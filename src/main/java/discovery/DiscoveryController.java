@@ -19,13 +19,13 @@ public class DiscoveryController {
 
 
         @RequestMapping(path = "/discover/", method = RequestMethod.GET)
-        public ResponseEntity<Collection<Discover>> listAll() {
+        public ResponseEntity<Collection<Discover>> listAllServices() {
 
                 return new ResponseEntity<Collection<Discover>>(concurrentHashMap.values(), HttpStatus.OK);
         }
 
         @RequestMapping(path = "/discover/{key}", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-        public ResponseEntity<String> discoverer(@PathVariable String key) {
+        public ResponseEntity<String> getService(@PathVariable String key) {
                 Discover discover = concurrentHashMap.get(key);
 
                 if (discover == null) {
@@ -39,13 +39,30 @@ public class DiscoveryController {
         @RequestMapping(value = "/discover/", method = RequestMethod.POST)
         public ResponseEntity<Void> createService(@RequestBody Discover discover) {
 
-
-                concurrentHashMap.putIfAbsent(discover.getKey(),discover);
+                for (String keyInserted: concurrentHashMap.keySet()){
+                        if (discover.getKey() == keyInserted){
+                                return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+                        }
+                }
+                concurrentHashMap.put(discover.getKey(),discover);
                 return new ResponseEntity<Void>(HttpStatus.OK);
-
-
         }
 
+        @RequestMapping(path = "/discover/{key}", method = RequestMethod.PUT)
+        public ResponseEntity<Void> updateService(@PathVariable String key,@RequestBody Discover discover) {
 
+                Discover discoverService = concurrentHashMap.get(key);
+
+                if (discoverService == null) {
+
+                        return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+                }
+                if (key.equals(discover.getKey())){
+                        return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+                }
+
+                concurrentHashMap.put(discover.getKey(),discover);
+                return new ResponseEntity<Void>(HttpStatus.OK);
+        }
 }
 
