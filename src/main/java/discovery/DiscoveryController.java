@@ -57,12 +57,20 @@ public class DiscoveryController {
 
                         return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
                 }
-                if (key.equals(discover.getKey())){
+
+                if (!key.equals(discover.getKey())){
                         return new ResponseEntity<Void>(HttpStatus.CONFLICT);
                 }
 
-                concurrentHashMap.put(discover.getKey(),discover);
+                discoverService.setValue(discover.getValue());
                 return new ResponseEntity<Void>(HttpStatus.OK);
         }
+
+        @RequestMapping(path = "/discover/{key}", method = RequestMethod.DELETE)
+        public ResponseEntity<Void> deleteService(@PathVariable String key){
+
+                return void;
+        }
+
 }
 
