@@ -1,11 +1,11 @@
-package discovery;
+package discovery.controller;
 
+import discovery.model.Discover;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -15,7 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class DiscoveryController {
 
         @Autowired
-        ConcurrentHashMap<String,Discover> concurrentHashMap;
+        ConcurrentHashMap<String, Discover> concurrentHashMap;
 
 
         @RequestMapping(path = "/discover/", method = RequestMethod.GET)
@@ -64,5 +64,20 @@ public class DiscoveryController {
                 concurrentHashMap.put(discover.getKey(),discover);
                 return new ResponseEntity<Void>(HttpStatus.OK);
         }
+
+        @RequestMapping(path = "/discover/{key}", method = RequestMethod.DELETE)
+        public ResponseEntity<Void> deleteService(@PathVariable String key) {
+
+                Discover discoverService = concurrentHashMap.get(key);
+
+                if (discoverService == null) {
+
+                        return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+                }
+
+                concurrentHashMap.remove(key);
+                return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+        }
+
 }
 

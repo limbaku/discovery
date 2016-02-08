@@ -1,19 +1,18 @@
-package discovery;
+package discovery.configuration;
 
 
+import discovery.model.Discover;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Configuration
 public class DiscoveryConfig {
 
     @Bean
-    public ConcurrentHashMap<String,Discover> initialiseList (){
+    public ConcurrentHashMap<String, Discover> initialiseList (){
 
         ConcurrentHashMap<String,Discover> concurrentHashMap = new ConcurrentHashMap<String, Discover>();
 

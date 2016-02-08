@@ -1,4 +1,4 @@
-package discovery;
+package discovery.model;
 
 import org.springframework.stereotype.Component;
 
