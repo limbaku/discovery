@@ -57,11 +57,12 @@ public class DiscoveryController {
 
                         return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
                 }
-                if (key.equals(discover.getKey())){
+
+                if (!key.equals(discover.getKey())){
                         return new ResponseEntity<Void>(HttpStatus.CONFLICT);
                 }
 
-                concurrentHashMap.put(discover.getKey(),discover);
+                discoverService.setValue(discover.getValue());
                 return new ResponseEntity<Void>(HttpStatus.OK);
         }
 
@@ -78,6 +79,5 @@ public class DiscoveryController {
                 concurrentHashMap.remove(key);
                 return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
         }
-
 }
 
