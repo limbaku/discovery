@@ -1,0 +1,7 @@
+apply plugin: 'docker'
+
+mainClassName = 'discovery.Application'
+
+distDocker {
+        exposePort 8080
+}
