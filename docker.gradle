@@ -4,4 +4,7 @@ mainClassName = 'discovery.Application'
 
 distDocker {
         exposePort 8080
+        push = true
+        tag = project.dockerName
+        tagVersion = project.currentAPIVersion
 }
