@@ -37,6 +37,9 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-jetty")
 
     compile("org.springframework.boot:spring-boot-starter-actuator")
+    compile ("com.google.guava:guava:19.0")
+    compile ("org.apache.directory.studio:org.apache.commons.lang:2.6")
+    compile ("org.projectlombok:lombok:1.16.8")
     testCompile("junit:junit")
 }
 

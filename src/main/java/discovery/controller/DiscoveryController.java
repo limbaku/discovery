@@ -28,6 +28,11 @@ public class DiscoveryController {
         public ResponseEntity<String> getService(@PathVariable String key) {
                 Discover discover = concurrentHashMap.get(key);
 
+
+                System.out.println(discover.toString());
+                System.out.println(discover.toStringHelper());
+                System.out.println(discover.toStringBuilder());
+
                 if (discover == null) {
 
                     return new ResponseEntity<String>(HttpStatus.NOT_FOUND);

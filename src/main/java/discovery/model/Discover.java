@@ -1,8 +1,12 @@
 package discovery.model;
 
+import com.google.common.base.MoreObjects;
+import lombok.ToString;
+import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.springframework.stereotype.Component;
 
-public class Discover {
+
+public @ToString class Discover {
 
     private String key;
     private String value;
@@ -31,11 +35,14 @@ public class Discover {
         this.key = key;
     }
 
-    @Override
-    public String toString() {
-        return "Discover{" +
-                "value='" + value + '\'' +
-                ", key='" + key + '\'' +
-                '}';
+    public String toStringHelper(){
+        return MoreObjects.toStringHelper(new Discover()).add(key,value).toString();
     }
+
+    public String toStringBuilder(){
+        return ReflectionToStringBuilder.toString(new Discover(key,value));
+    }
+
+
+
 }
