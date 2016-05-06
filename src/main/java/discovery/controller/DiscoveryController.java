@@ -1,7 +1,7 @@
 package discovery.controller;
 
+import discovery.DiscoveryAnnotation;
 import discovery.model.Discover;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +14,8 @@ import java.util.concurrent.ConcurrentHashMap;
 @RestController
 public class DiscoveryController {
 
-        @Autowired
+        @DiscoveryAnnotation
         ConcurrentHashMap<String, Discover> concurrentHashMap;
-
 
         @RequestMapping(path = "/discover/", method = RequestMethod.GET)
         public ResponseEntity<Collection<Discover>> listAllServices() {
@@ -27,7 +26,6 @@ public class DiscoveryController {
         @RequestMapping(path = "/discover/{key}", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
         public ResponseEntity<String> getService(@PathVariable String key) {
                 Discover discover = concurrentHashMap.get(key);
-
 
                 System.out.println(discover.toString());
                 System.out.println(discover.toStringHelper());
