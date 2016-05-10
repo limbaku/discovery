@@ -2,6 +2,7 @@ package discovery.controller;
 
 import discovery.DiscoveryAnnotation;
 import discovery.model.Discover;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @RestController
 public class DiscoveryController {
 
-        @DiscoveryAnnotation
+        @Autowired
         ConcurrentHashMap<String, Discover> concurrentHashMap;
 
         @RequestMapping(path = "/discover/", method = RequestMethod.GET)
@@ -27,9 +28,9 @@ public class DiscoveryController {
         public ResponseEntity<String> getService(@PathVariable String key) {
                 Discover discover = concurrentHashMap.get(key);
 
-                System.out.println(discover.toString());
-                System.out.println(discover.toStringHelper());
-                System.out.println(discover.toStringBuilder());
+//                System.out.println(discover.toString());
+//                System.out.println(discover.toStringHelper());
+//                System.out.println(discover.toStringBuilder());
 
                 if (discover == null) {
 
@@ -43,7 +44,7 @@ public class DiscoveryController {
         public ResponseEntity<Void> createService(@RequestBody Discover discover) {
 
                 for (String keyInserted: concurrentHashMap.keySet()){
-                        if (discover.getKey() == keyInserted){
+                        if (discover.getKey().equals(keyInserted)){
                                 return new ResponseEntity<Void>(HttpStatus.CONFLICT);
                         }
                 }
