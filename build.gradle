@@ -38,7 +38,6 @@ dependencies {
 
     compile("org.springframework.boot:spring-boot-starter-actuator")
     compile ("com.google.guava:guava:19.0")
-    compile ("org.apache.directory.studio:org.apache.commons.lang:2.6")
     compile ("org.projectlombok:lombok:1.16.8")
     compile 'com.jayway.restassured:spring-mock-mvc:2.9.0'
     compile 'org.springframework:spring-test:4.1.9.RELEASE'

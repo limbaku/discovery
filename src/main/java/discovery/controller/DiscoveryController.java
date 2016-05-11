@@ -43,10 +43,9 @@ public class DiscoveryController {
         @RequestMapping(value = "/discover/", method = RequestMethod.POST)
         public ResponseEntity<Void> createService(@RequestBody Discover discover) {
 
-                for (String keyInserted: concurrentHashMap.keySet()){
-                        if (discover.getKey().equals(keyInserted)){
-                                return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-                        }
+                if(concurrentHashMap.containsKey(discover.getKey()))
+                {
+                        return new ResponseEntity<Void>(HttpStatus.CONFLICT);
                 }
                 concurrentHashMap.put(discover.getKey(),discover);
                 return new ResponseEntity<Void>(HttpStatus.OK);

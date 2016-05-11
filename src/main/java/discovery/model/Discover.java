@@ -2,7 +2,6 @@ package discovery.model;
 
 import com.google.common.base.MoreObjects;
 import lombok.ToString;
-import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.springframework.stereotype.Component;
 
 
@@ -39,9 +38,7 @@ public @ToString class Discover {
         return MoreObjects.toStringHelper(new Discover()).add(key,value).toString();
     }
 
-    public String toStringBuilder(){
-        return ReflectionToStringBuilder.toString(new Discover(key,value));
-    }
+
 
 
 
