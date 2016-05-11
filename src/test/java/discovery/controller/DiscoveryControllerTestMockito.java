@@ -59,23 +59,18 @@ public class DiscoveryControllerTestMockito {
     @Test
     public void shouldReturnNotFoundWhenGettingService() throws Exception {
         //given
-        String key="lazylogin2";
-        String value="http://lazylogin2.trafalgar.ws/";
+        String key="lazylogin";
+        String value="http://lazylogin.trafalgar.ws/";
 
         //when
         when(concurrentHashMap.get(key)).thenReturn(new Discover(key,value));
 
         //then
-        mockMvc.perform(get("/discover/lazylogin")).andExpect(status().isNotFound());
+        mockMvc.perform(get("/discover/lazylogin2")).andExpect(status().isNotFound());
     }
 
     @Test
     public void shouldCreateNewService() throws Exception {
-        //given
-        String key="lazylogin";
-        String value="http://lazylogin.trafalgar.ws/";
-        ConcurrentHashMap<String,Discover> testHashMap = new ConcurrentHashMap<String, Discover>();
-        testHashMap.put(key,new Discover(key,value));
 
         //when
         when(concurrentHashMap.containsKey(anyString())).thenReturn(false);
@@ -89,12 +84,6 @@ public class DiscoveryControllerTestMockito {
 
     @Test
     public void shouldReturnConflict() throws Exception {
-        //given
-        String key="lazylogin";
-        String value="http://lazylogin.trafalgar.ws/";
-        ConcurrentHashMap<String,Discover> testHashMap = new ConcurrentHashMap<String, Discover>();
-        testHashMap.put(key,new Discover(key,value));
-
         //when
         when(concurrentHashMap.containsKey(anyString())).thenReturn(true);
 
