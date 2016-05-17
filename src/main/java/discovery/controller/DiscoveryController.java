@@ -1,5 +1,6 @@
 package discovery.controller;
 
+import discovery.DiscoveryAnnotation;
 import discovery.model.Discover;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +18,6 @@ public class DiscoveryController {
         @Autowired
         ConcurrentHashMap<String, Discover> concurrentHashMap;
 
-
         @RequestMapping(path = "/discover/", method = RequestMethod.GET)
         public ResponseEntity<Collection<Discover>> listAllServices() {
 
@@ -27,6 +27,10 @@ public class DiscoveryController {
         @RequestMapping(path = "/discover/{key}", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
         public ResponseEntity<String> getService(@PathVariable String key) {
                 Discover discover = concurrentHashMap.get(key);
+
+//                System.out.println(discover.toString());
+//                System.out.println(discover.toStringHelper());
+//                System.out.println(discover.toStringBuilder());
 
                 if (discover == null) {
 
@@ -39,10 +43,9 @@ public class DiscoveryController {
         @RequestMapping(value = "/discover/", method = RequestMethod.POST)
         public ResponseEntity<Void> createService(@RequestBody Discover discover) {
 
-                for (String keyInserted: concurrentHashMap.keySet()){
-                        if (discover.getKey() == keyInserted){
-                                return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-                        }
+                if(concurrentHashMap.containsKey(discover.getKey()))
+                {
+                        return new ResponseEntity<Void>(HttpStatus.CONFLICT);
                 }
                 concurrentHashMap.put(discover.getKey(),discover);
                 return new ResponseEntity<Void>(HttpStatus.OK);

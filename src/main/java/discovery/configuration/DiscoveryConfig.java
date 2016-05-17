@@ -23,5 +23,4 @@ public class DiscoveryConfig {
 
         return concurrentHashMap;
     }
-
 }
