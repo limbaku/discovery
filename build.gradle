@@ -35,7 +35,6 @@ dependencies {
         exclude module: "spring-boot-starter-tomcat"
     }
     compile("org.springframework.boot:spring-boot-starter-jetty")
-
     compile("org.springframework.boot:spring-boot-starter-actuator")
     compile ("com.google.guava:guava:19.0")
     compile ("org.projectlombok:lombok:1.16.8")
@@ -43,6 +42,7 @@ dependencies {
     compile ("org.springframework:spring-test:4.1.9.RELEASE")
     compile ("org.mockito:mockito-all:2.0.2-beta")
     compile ("org.spockframework:spock-spring:1.0-groovy-2.4")
+    compile ("cglib:cglib:3.2.2")
 
     testCompile("junit:junit")
 }
