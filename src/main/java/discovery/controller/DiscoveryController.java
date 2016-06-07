@@ -1,7 +1,7 @@
 package discovery.controller;
 
-import discovery.DiscoveryAnnotation;
 import discovery.model.Discover;
+import discovery.service.DiscoveryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -9,55 +9,57 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
 
 
 @RestController
 public class DiscoveryController {
 
+
         @Autowired
-        ConcurrentHashMap<String, Discover> concurrentHashMap;
+        DiscoveryService persistence;
 
         @RequestMapping(path = "/discover/", method = RequestMethod.GET)
         public ResponseEntity<Collection<Discover>> listAllServices() {
+                Collection<Discover> discovers = persistence.getAllservices();
 
-                return new ResponseEntity<Collection<Discover>>(concurrentHashMap.values(), HttpStatus.OK);
+                if (discovers.isEmpty()) {
+                        return new ResponseEntity<Collection<Discover>>(HttpStatus.NO_CONTENT);
+                }
+
+                return new ResponseEntity<Collection<Discover>>(discovers, HttpStatus.OK);
         }
+
 
         @RequestMapping(path = "/discover/{key}", method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
         public ResponseEntity<String> getService(@PathVariable String key) {
-                Discover discover = concurrentHashMap.get(key);
-
-//                System.out.println(discover.toString());
-//                System.out.println(discover.toStringHelper());
-//                System.out.println(discover.toStringBuilder());
+                Discover discover = persistence.getService(key);
 
                 if (discover == null) {
-
                     return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
                 }
                 return new ResponseEntity<String>(discover.getValue(),HttpStatus.OK);
 
         }
 
+
         @RequestMapping(value = "/discover/", method = RequestMethod.POST)
         public ResponseEntity<Void> createService(@RequestBody Discover discover) {
 
-                if(concurrentHashMap.containsKey(discover.getKey()))
-                {
+                if (persistence.serviceExist(discover.getKey())) {
                         return new ResponseEntity<Void>(HttpStatus.CONFLICT);
                 }
-                concurrentHashMap.put(discover.getKey(),discover);
+
+                persistence.createService(discover);
                 return new ResponseEntity<Void>(HttpStatus.OK);
         }
+
 
         @RequestMapping(path = "/discover/{key}", method = RequestMethod.PUT)
         public ResponseEntity<Void> updateService(@PathVariable String key,@RequestBody Discover discover) {
 
-                Discover discoverService = concurrentHashMap.get(key);
+                Discover discoverService = persistence.getService(key);
 
                 if (discoverService == null) {
-
                         return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
                 }
 
@@ -66,21 +68,22 @@ public class DiscoveryController {
                 }
 
                 discoverService.setValue(discover.getValue());
+                persistence.updateService(discoverService);
                 return new ResponseEntity<Void>(HttpStatus.OK);
         }
 
         @RequestMapping(path = "/discover/{key}", method = RequestMethod.DELETE)
         public ResponseEntity<Void> deleteService(@PathVariable String key) {
 
-                Discover discoverService = concurrentHashMap.get(key);
+                Discover discoverService = persistence.getService(key);
 
                 if (discoverService == null) {
-
                         return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
                 }
 
-                concurrentHashMap.remove(key);
+                persistence.deleteService(key);
                 return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
         }
+
 }
 

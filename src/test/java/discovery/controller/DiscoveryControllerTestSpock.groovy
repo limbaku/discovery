@@ -1,6 +1,8 @@
 package discovery.controller
 
 import discovery.model.Discover
+import discovery.service.DiscoveryService
+import discovery.service.DiscoveryServiceImpl
 import org.springframework.http.HttpStatus
 import spock.lang.Specification
 
@@ -9,17 +11,17 @@ import java.util.concurrent.ConcurrentHashMap
 class DiscoveryControllerTestSpock extends Specification{
 
     DiscoveryController discoveryController = new DiscoveryController();
-    ConcurrentHashMap<String, Discover> concurrentHashMap = Mock()
+    DiscoveryService persistence = Mock()
 
     def setup(){
-        discoveryController.concurrentHashMap = concurrentHashMap;
+        discoveryController.persistence = persistence;
     }
 
     def "Test should get existing service"(){
         given:
         def key="lazylogin";
         def value="http://lazylogin.trafalgar.ws/";
-        concurrentHashMap.get("/discover/lazylogin") >> new Discover(key,value);
+        persistence.getService("/discover/lazylogin") >> new Discover(key,value);
 
         when:
 
@@ -28,11 +30,12 @@ class DiscoveryControllerTestSpock extends Specification{
         response.statusCode.equals(HttpStatus.OK);
     }
 
+
     def "Test should return not found when getting service"(){
         given:
         def key="lazylogin";
         def value="http://lazylogin.trafalgar.ws/";
-        concurrentHashMap.get("/discover/lazylogin") >> new Discover(key,value);
+        persistence.getService("/discover/lazylogin") >> new Discover(key,value);
 
         when:
 
@@ -41,11 +44,12 @@ class DiscoveryControllerTestSpock extends Specification{
         response.statusCode.equals(HttpStatus.NOT_FOUND);
     }
 
+
     def "Test should create new service"(){
         given:
         def key="lazylogin";
         def value="http://lazylogin.trafalgar.ws/";
-        concurrentHashMap.containsKey(key) >> false;
+        persistence.serviceExist(key) >> false
 
         when:
         def response = discoveryController.createService(new Discover(key,value));
@@ -58,7 +62,7 @@ class DiscoveryControllerTestSpock extends Specification{
         given:
         def key="lazylogin";
         def value="http://lazylogin.trafalgar.ws/";
-        concurrentHashMap.containsKey(key) >> true;
+        persistence.serviceExist(key) >> true;
 
         when:
         def response = discoveryController.createService(new Discover(key,value));
@@ -66,12 +70,13 @@ class DiscoveryControllerTestSpock extends Specification{
         response.statusCode.equals(HttpStatus.CONFLICT);
     }
 
+
     def "Test should update service"(){
         given:
         def key="lazylogin";
         def value="http://lazylogin.trafalgar.ws/";
         def value2="http://lazylogin2.trafalgar.ws/";
-        concurrentHashMap.get(key) >> new Discover(key,value);
+        persistence.getService(key) >> new Discover(key,value);
 
         when:
 
@@ -86,7 +91,7 @@ class DiscoveryControllerTestSpock extends Specification{
         def key2="lazylogin2";
         def value="http://lazylogin.trafalgar.ws/";
         def value2="http://lazylogin2.trafalgar.ws/";
-        concurrentHashMap.get(key) >> new Discover(key,value);
+        persistence.getService(key) >> new Discover(key,value);
 
         when:
 
@@ -95,12 +100,14 @@ class DiscoveryControllerTestSpock extends Specification{
         response.statusCode.equals(HttpStatus.NOT_FOUND);
     }
 
+
+
     def "Test should return conflict when updating service"(){
         given:
         def key="lazylogin";
         def key2="lazylogin2";
         def value="http://lazylogin.trafalgar.ws/";
-        concurrentHashMap.get(key) >> new Discover(key,value);
+        persistence.getService(key) >> new Discover(key,value);
 
         when:
 
@@ -109,11 +116,13 @@ class DiscoveryControllerTestSpock extends Specification{
         response.statusCode.equals(HttpStatus.CONFLICT);
     }
 
+
+
     def "Test should delete service"(){
         given:
         def key="lazylogin";
         def value="http://lazylogin.trafalgar.ws/";
-        concurrentHashMap.get(key) >> new Discover(key,value);
+        persistence.getService(key) >> new Discover(key,value);
 
         when:
 
@@ -127,7 +136,7 @@ class DiscoveryControllerTestSpock extends Specification{
         def key="lazylogin";
         def key2="lazylogin2";
         def value="http://lazylogin.trafalgar.ws/";
-        concurrentHashMap.get(key) >> new Discover(key,value);
+        persistence.getService(key) >> new Discover(key,value);
 
         when:
 
@@ -135,4 +144,5 @@ class DiscoveryControllerTestSpock extends Specification{
         then:
         response.statusCode.equals(HttpStatus.NOT_FOUND);
     }
+
 }
