@@ -3,6 +3,7 @@ package discovery.controller;
 
 import discovery.model.Discover;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -18,14 +19,13 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.concurrent.ConcurrentHashMap;
 
 
-import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 
-
+@Ignore("DiscoverController tested using Spock")
 public class DiscoveryControllerTestMockito {
 
     private MockMvc mockMvc;

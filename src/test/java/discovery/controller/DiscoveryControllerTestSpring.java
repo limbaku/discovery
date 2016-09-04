@@ -2,16 +2,11 @@ package discovery.controller;
 
 
 import discovery.Application;
-import discovery.configuration.DiscoveryConfig;
 import discovery.model.Discover;
 import org.junit.Before;
-import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.MethodSorters;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
@@ -22,13 +17,13 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = Application.class)
+@Ignore("DiscoverController tested using Spock")
 public class DiscoveryControllerTestSpring {
 
     private MockMvc mockMvc;

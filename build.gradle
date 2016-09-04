@@ -35,16 +35,18 @@ dependencies {
         exclude module: "spring-boot-starter-tomcat"
     }
     compile("org.springframework.boot:spring-boot-starter-jetty")
-
     compile("org.springframework.boot:spring-boot-starter-actuator")
     compile ("com.google.guava:guava:19.0")
     compile ("org.projectlombok:lombok:1.16.8")
-    compile ("com.jayway.restassured:spring-mock-mvc:2.9.0")
-    compile ("org.springframework:spring-test:4.1.9.RELEASE")
-    compile ("org.mockito:mockito-all:2.0.2-beta")
-    compile ("org.spockframework:spock-spring:1.0-groovy-2.4")
+    compile ("ch.qos.logback:logback-parent:1.1.7")
+    compile ("commons-collections:commons-collections:3.2.1")
+    compile ("commons-beanutils:commons-beanutils:1.9.2")
 
+    testCompile ("com.jayway.restassured:spring-mock-mvc:2.9.0")
     testCompile("junit:junit")
+    testCompile ("org.springframework:spring-test:4.1.9.RELEASE")
+    testCompile ("org.mockito:mockito-all:2.0.2-beta")
+    testCompile ("org.spockframework:spock-spring:1.0-groovy-2.4")
 }
 
 task wrapper(type: Wrapper) {
