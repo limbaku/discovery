@@ -2,9 +2,11 @@ package discovery.model;
 
 import com.google.common.base.MoreObjects;
 import lombok.ToString;
-import org.springframework.stereotype.Component;
+
+import javax.persistence.Entity;
 
 
+@Entity
 public @ToString class Discover {
 
     private String key;
