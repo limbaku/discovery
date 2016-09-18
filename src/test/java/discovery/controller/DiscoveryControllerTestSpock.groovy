@@ -1,12 +1,9 @@
 package discovery.controller
 
-import discovery.model.Discover
+import discovery.domain.Discover
 import discovery.service.DiscoveryService
-import discovery.service.DiscoveryServiceImpl
 import org.springframework.http.HttpStatus
 import spock.lang.Specification
-
-import java.util.concurrent.ConcurrentHashMap
 
 class DiscoveryControllerTestSpock extends Specification{
 

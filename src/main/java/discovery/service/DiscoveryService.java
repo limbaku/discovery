@@ -1,7 +1,7 @@
 package discovery.service;
 
 
-import discovery.model.Discover;
+import discovery.domain.Discover;
 
 import java.util.Collection;
 

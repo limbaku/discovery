@@ -1,7 +1,7 @@
 package discovery.controller;
 
 
-import discovery.model.Discover;
+import discovery.domain.Discover;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;

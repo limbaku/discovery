@@ -1,7 +1,7 @@
 package discovery.configuration;
 
 
-import discovery.model.Discover;
+import discovery.domain.Discover;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

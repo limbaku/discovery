@@ -1,15 +1,13 @@
 package discovery.service;
 
-import discovery.model.Discover;
+import discovery.domain.Discover;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.concurrent.ConcurrentHashMap;
 
-@Component
+@Service
 public class DiscoveryServiceImpl implements DiscoveryService {
 
     @Autowired
