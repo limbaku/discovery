@@ -4,6 +4,7 @@ import discovery.domain.Discover;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -13,38 +14,40 @@ public class DiscoveryServiceImpl implements DiscoveryService {
     @Autowired
     ConcurrentHashMap<String, Discover> concurrentHashMap;
 
+    @Autowired
+    DiscoveryRepository discoveryRepository;
+
     @Override
     public Collection<Discover> getAllservices() {
-        return concurrentHashMap.values();
+
+        return convertIterableToCollection(discoveryRepository.findAll());
     }
 
     @Override
     public Discover getService(String key) {
-        Discover discover = concurrentHashMap.get(key);
+        Discover discover = discoveryRepository.findOne(key);
 
-        if (discover == null)
-            return null;
-        else
-            return discover;
+        return discover;
     }
 
     @Override
-    public void createService(Discover discover) {
-        concurrentHashMap.put(discover.getKey(),discover);
+    public void saveService(Discover discover) {
+        discoveryRepository.save(discover);
     }
 
     @Override
-    public void updateService(Discover discover) {
-        concurrentHashMap.put(discover.getKey(),discover);
+    public void deleteService(String key) { discoveryRepository.delete(key);
     }
 
     @Override
-    public void deleteService(String key) {
-        concurrentHashMap.remove(key);
+    public boolean serviceExist(String key) { return discoveryRepository.exists(key);
     }
 
-    @Override
-    public boolean serviceExist(String key) {
-        return concurrentHashMap.containsKey(key);
+    public Collection convertIterableToCollection (Iterable iterable){
+        Collection collection = new ArrayList();
+
+        iterable.forEach(collection::add);
+        return collection;
+
     }
 }

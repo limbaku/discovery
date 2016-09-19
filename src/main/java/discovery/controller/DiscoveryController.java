@@ -63,7 +63,7 @@ public class DiscoveryController {
                         return new ResponseEntity<Void>(HttpStatus.CONFLICT);
                 }
 
-                discoveryService.createService(discover);
+                discoveryService.saveService(discover);
                 logger.info("CreateService method - New service created with key " + discover.getKey() + " and url " + discover.getValue());
                 return new ResponseEntity<Void>(HttpStatus.OK);
         }
@@ -85,7 +85,7 @@ public class DiscoveryController {
 
                 discoverService.setValue(discover.getValue());
                 logger.info("UpdateService method - Updated service " + key + ". New url will be " + discoverService.getValue());
-                discoveryService.updateService(discoverService);
+                discoveryService.saveService(discoverService);
                 return new ResponseEntity<Void>(HttpStatus.OK);
         }
 

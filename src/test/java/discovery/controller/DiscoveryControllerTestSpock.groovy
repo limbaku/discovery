@@ -8,17 +8,17 @@ import spock.lang.Specification
 class DiscoveryControllerTestSpock extends Specification{
 
     DiscoveryController discoveryController = new DiscoveryController();
-    DiscoveryService persistence = Mock()
+    DiscoveryService discoveryService = Mock()
 
     def setup(){
-        discoveryController.persistence = persistence;
+        discoveryController.discoveryService = discoveryService;
     }
 
     def "Test should get existing service"(){
         given:
         def key="lazylogin";
         def value="http://lazylogin.trafalgar.ws/";
-        persistence.getService("/discover/lazylogin") >> new Discover(key,value);
+        discoveryService.getService("/discover/lazylogin") >> new Discover(key,value);
 
         when:
 
@@ -32,7 +32,7 @@ class DiscoveryControllerTestSpock extends Specification{
         given:
         def key="lazylogin";
         def value="http://lazylogin.trafalgar.ws/";
-        persistence.getService("/discover/lazylogin") >> new Discover(key,value);
+        discoveryService.getService("/discover/lazylogin") >> new Discover(key,value);
 
         when:
 
@@ -46,7 +46,7 @@ class DiscoveryControllerTestSpock extends Specification{
         given:
         def key="lazylogin";
         def value="http://lazylogin.trafalgar.ws/";
-        persistence.serviceExist(key) >> false
+        discoveryService.serviceExist(key) >> false
 
         when:
         def response = discoveryController.createService(new Discover(key,value));
@@ -59,7 +59,7 @@ class DiscoveryControllerTestSpock extends Specification{
         given:
         def key="lazylogin";
         def value="http://lazylogin.trafalgar.ws/";
-        persistence.serviceExist(key) >> true;
+        discoveryService.serviceExist(key) >> true;
 
         when:
         def response = discoveryController.createService(new Discover(key,value));
@@ -73,7 +73,7 @@ class DiscoveryControllerTestSpock extends Specification{
         def key="lazylogin";
         def value="http://lazylogin.trafalgar.ws/";
         def value2="http://lazylogin2.trafalgar.ws/";
-        persistence.getService(key) >> new Discover(key,value);
+        discoveryService.getService(key) >> new Discover(key,value);
 
         when:
 
@@ -88,7 +88,7 @@ class DiscoveryControllerTestSpock extends Specification{
         def key2="lazylogin2";
         def value="http://lazylogin.trafalgar.ws/";
         def value2="http://lazylogin2.trafalgar.ws/";
-        persistence.getService(key) >> new Discover(key,value);
+        discoveryService.getService(key) >> new Discover(key,value);
 
         when:
 
@@ -104,7 +104,7 @@ class DiscoveryControllerTestSpock extends Specification{
         def key="lazylogin";
         def key2="lazylogin2";
         def value="http://lazylogin.trafalgar.ws/";
-        persistence.getService(key) >> new Discover(key,value);
+        discoveryService.getService(key) >> new Discover(key,value);
 
         when:
 
@@ -119,7 +119,7 @@ class DiscoveryControllerTestSpock extends Specification{
         given:
         def key="lazylogin";
         def value="http://lazylogin.trafalgar.ws/";
-        persistence.getService(key) >> new Discover(key,value);
+        discoveryService.getService(key) >> new Discover(key,value);
 
         when:
 
@@ -133,7 +133,7 @@ class DiscoveryControllerTestSpock extends Specification{
         def key="lazylogin";
         def key2="lazylogin2";
         def value="http://lazylogin.trafalgar.ws/";
-        persistence.getService(key) >> new Discover(key,value);
+        discoveryService.getService(key) >> new Discover(key,value);
 
         when:
 

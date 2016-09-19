@@ -13,21 +13,10 @@ import javax.persistence.Id;
 public @ToString class Discover {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
-
     private String key;
     private String value;
 
     public Discover() {
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public Discover(String key, String value) {
