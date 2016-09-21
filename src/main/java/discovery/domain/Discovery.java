@@ -10,16 +10,16 @@ import javax.persistence.Id;
 
 
 @Entity
-public @ToString class Discover {
+public @ToString class Discovery {
 
     @Id
     private String key;
     private String value;
 
-    public Discover() {
+    public Discovery() {
     }
 
-    public Discover(String key, String value) {
+    public Discovery(String key, String value) {
         this.key = key;
         this.value = value;
     }
@@ -41,7 +41,7 @@ public @ToString class Discover {
     }
 
     public String toStringHelper(){
-        return MoreObjects.toStringHelper(new Discover()).add(key,value).toString();
+        return MoreObjects.toStringHelper(new Discovery()).add(key,value).toString();
     }
 
 

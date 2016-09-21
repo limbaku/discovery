@@ -1,38 +1,34 @@
 package discovery.service;
 
-import discovery.domain.Discover;
+import discovery.domain.Discovery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class DiscoveryServiceImpl implements DiscoveryService {
 
     @Autowired
-    ConcurrentHashMap<String, Discover> concurrentHashMap;
-
-    @Autowired
     DiscoveryRepository discoveryRepository;
 
     @Override
-    public Collection<Discover> getAllservices() {
+    public Collection<Discovery> getAllservices() {
 
         return convertIterableToCollection(discoveryRepository.findAll());
     }
 
     @Override
-    public Discover getService(String key) {
-        Discover discover = discoveryRepository.findOne(key);
+    public Discovery getService(String key) {
+        Discovery discovery = discoveryRepository.findOne(key);
 
-        return discover;
+        return discovery;
     }
 
     @Override
-    public void saveService(Discover discover) {
-        discoveryRepository.save(discover);
+    public void saveService(Discovery discovery) {
+        discoveryRepository.save(discovery);
     }
 
     @Override
