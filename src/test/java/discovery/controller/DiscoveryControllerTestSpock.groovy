@@ -1,27 +1,24 @@
 package discovery.controller
 
-import discovery.model.Discover
+import discovery.domain.Discovery
 import discovery.service.DiscoveryService
-import discovery.service.DiscoveryServiceImpl
 import org.springframework.http.HttpStatus
 import spock.lang.Specification
-
-import java.util.concurrent.ConcurrentHashMap
 
 class DiscoveryControllerTestSpock extends Specification{
 
     DiscoveryController discoveryController = new DiscoveryController();
-    DiscoveryService persistence = Mock()
+    DiscoveryService discoveryService = Mock()
 
     def setup(){
-        discoveryController.persistence = persistence;
+        discoveryController.discoveryService = discoveryService;
     }
 
     def "Test should get existing service"(){
         given:
         def key="lazylogin";
         def value="http://lazylogin.trafalgar.ws/";
-        persistence.getService("/discover/lazylogin") >> new Discover(key,value);
+        discoveryService.getService("/discover/lazylogin") >> new Discovery(key,value);
 
         when:
 
@@ -35,7 +32,7 @@ class DiscoveryControllerTestSpock extends Specification{
         given:
         def key="lazylogin";
         def value="http://lazylogin.trafalgar.ws/";
-        persistence.getService("/discover/lazylogin") >> new Discover(key,value);
+        discoveryService.getService("/discover/lazylogin") >> new Discovery(key,value);
 
         when:
 
@@ -49,10 +46,10 @@ class DiscoveryControllerTestSpock extends Specification{
         given:
         def key="lazylogin";
         def value="http://lazylogin.trafalgar.ws/";
-        persistence.serviceExist(key) >> false
+        discoveryService.serviceExist(key) >> false
 
         when:
-        def response = discoveryController.createService(new Discover(key,value));
+        def response = discoveryController.createService(new Discovery(key,value));
 
         then:
         response.statusCode.equals(HttpStatus.OK);
@@ -62,10 +59,10 @@ class DiscoveryControllerTestSpock extends Specification{
         given:
         def key="lazylogin";
         def value="http://lazylogin.trafalgar.ws/";
-        persistence.serviceExist(key) >> true;
+        discoveryService.serviceExist(key) >> true;
 
         when:
-        def response = discoveryController.createService(new Discover(key,value));
+        def response = discoveryController.createService(new Discovery(key,value));
         then:
         response.statusCode.equals(HttpStatus.CONFLICT);
     }
@@ -76,11 +73,11 @@ class DiscoveryControllerTestSpock extends Specification{
         def key="lazylogin";
         def value="http://lazylogin.trafalgar.ws/";
         def value2="http://lazylogin2.trafalgar.ws/";
-        persistence.getService(key) >> new Discover(key,value);
+        discoveryService.getService(key) >> new Discovery(key,value);
 
         when:
 
-        def response = discoveryController.updateService(key,new Discover(key,value2));
+        def response = discoveryController.updateService(key,new Discovery(key,value2));
         then:
         response.statusCode.equals(HttpStatus.OK);
     }
@@ -91,11 +88,11 @@ class DiscoveryControllerTestSpock extends Specification{
         def key2="lazylogin2";
         def value="http://lazylogin.trafalgar.ws/";
         def value2="http://lazylogin2.trafalgar.ws/";
-        persistence.getService(key) >> new Discover(key,value);
+        discoveryService.getService(key) >> new Discovery(key,value);
 
         when:
 
-        def response = discoveryController.updateService(key2,new Discover(key,value2));
+        def response = discoveryController.updateService(key2,new Discovery(key,value2));
         then:
         response.statusCode.equals(HttpStatus.NOT_FOUND);
     }
@@ -107,11 +104,11 @@ class DiscoveryControllerTestSpock extends Specification{
         def key="lazylogin";
         def key2="lazylogin2";
         def value="http://lazylogin.trafalgar.ws/";
-        persistence.getService(key) >> new Discover(key,value);
+        discoveryService.getService(key) >> new Discovery(key,value);
 
         when:
 
-        def response = discoveryController.updateService(key,new Discover(key2,value));
+        def response = discoveryController.updateService(key,new Discovery(key2,value));
         then:
         response.statusCode.equals(HttpStatus.CONFLICT);
     }
@@ -122,7 +119,7 @@ class DiscoveryControllerTestSpock extends Specification{
         given:
         def key="lazylogin";
         def value="http://lazylogin.trafalgar.ws/";
-        persistence.getService(key) >> new Discover(key,value);
+        discoveryService.getService(key) >> new Discovery(key,value);
 
         when:
 
@@ -136,7 +133,7 @@ class DiscoveryControllerTestSpock extends Specification{
         def key="lazylogin";
         def key2="lazylogin2";
         def value="http://lazylogin.trafalgar.ws/";
-        persistence.getService(key) >> new Discover(key,value);
+        discoveryService.getService(key) >> new Discovery(key,value);
 
         when:
 
@@ -144,5 +141,7 @@ class DiscoveryControllerTestSpock extends Specification{
         then:
         response.statusCode.equals(HttpStatus.NOT_FOUND);
     }
+
+
 
 }

@@ -1,19 +1,25 @@
-package discovery.model;
+package discovery.domain;
 
 import com.google.common.base.MoreObjects;
 import lombok.ToString;
-import org.springframework.stereotype.Component;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 
-public @ToString class Discover {
+@Entity
+public @ToString class Discovery {
 
+    @Id
     private String key;
     private String value;
 
-    public Discover() {
+    public Discovery() {
     }
 
-    public Discover(String key, String value) {
+    public Discovery(String key, String value) {
         this.key = key;
         this.value = value;
     }
@@ -35,7 +41,7 @@ public @ToString class Discover {
     }
 
     public String toStringHelper(){
-        return MoreObjects.toStringHelper(new Discover()).add(key,value).toString();
+        return MoreObjects.toStringHelper(new Discovery()).add(key,value).toString();
     }
 
 

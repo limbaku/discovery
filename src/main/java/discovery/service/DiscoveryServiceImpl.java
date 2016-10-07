@@ -1,52 +1,49 @@
 package discovery.service;
 
-import discovery.model.Discover;
+import discovery.domain.Discovery;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.concurrent.ConcurrentHashMap;
 
-@Component
+@Service
 public class DiscoveryServiceImpl implements DiscoveryService {
 
     @Autowired
-    ConcurrentHashMap<String, Discover> concurrentHashMap;
+    DiscoveryRepository discoveryRepository;
 
     @Override
-    public Collection<Discover> getAllservices() {
-        return concurrentHashMap.values();
+    public Collection<Discovery> getAllservices() {
+
+        return convertIterableToCollection(discoveryRepository.findAll());
     }
 
     @Override
-    public Discover getService(String key) {
-        Discover discover = concurrentHashMap.get(key);
+    public Discovery getService(String key) {
+        Discovery discovery = discoveryRepository.findOne(key);
 
-        if (discover == null)
-            return null;
-        else
-            return discover;
+        return discovery;
     }
 
     @Override
-    public void createService(Discover discover) {
-        concurrentHashMap.put(discover.getKey(),discover);
+    public void saveService(Discovery discovery) {
+        discoveryRepository.save(discovery);
     }
 
     @Override
-    public void updateService(Discover discover) {
-        concurrentHashMap.put(discover.getKey(),discover);
+    public void deleteService(String key) { discoveryRepository.delete(key);
     }
 
     @Override
-    public void deleteService(String key) {
-        concurrentHashMap.remove(key);
+    public boolean serviceExist(String key) { return discoveryRepository.exists(key);
     }
 
-    @Override
-    public boolean serviceExist(String key) {
-        return concurrentHashMap.containsKey(key);
+    public Collection convertIterableToCollection (Iterable iterable){
+        Collection collection = new ArrayList();
+
+        iterable.forEach(collection::add);
+        return collection;
+
     }
 }

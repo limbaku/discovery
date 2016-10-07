@@ -1,16 +1,15 @@
 package discovery.service;
 
 
-import discovery.model.Discover;
+import discovery.domain.Discovery;
 
 import java.util.Collection;
 
 public interface DiscoveryService {
 
-    Collection<Discover> getAllservices();
-    Discover getService(String key);
-    void createService (Discover discover);
-    void updateService (Discover discover);
+    Collection<Discovery> getAllservices();
+    Discovery getService(String key);
+    void saveService (Discovery discovery);
     void deleteService (String key);
     boolean serviceExist (String key);
 

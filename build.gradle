@@ -41,6 +41,9 @@ dependencies {
     compile ("ch.qos.logback:logback-parent:1.1.7")
     compile ("commons-collections:commons-collections:3.2.1")
     compile ("commons-beanutils:commons-beanutils:1.9.2")
+    compile ("com.h2database:h2:1.0.60")
+    compile("org.springframework.boot:spring-boot-starter-data-jpa")
+
 
     testCompile ("com.jayway.restassured:spring-mock-mvc:2.9.0")
     testCompile("junit:junit")
